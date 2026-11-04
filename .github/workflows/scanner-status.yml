@@ -1,0 +1,52 @@
+name: Scanner status checks
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/scanner-status.yml
+      - server-installer/portal/index.php
+      - server-installer/portal/assets/app.js
+      - server-installer/tests/scanner-status.php
+      - server-installer/tests/scanner-status-ui.cjs
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/scanner-status.yml
+      - server-installer/portal/index.php
+      - server-installer/portal/assets/app.js
+      - server-installer/tests/scanner-status.php
+      - server-installer/tests/scanner-status-ui.cjs
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  scanner-status:
+    name: PHP and browser polling checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
+
+      - name: Check portal PHP syntax
+        run: php -l server-installer/portal/index.php
+
+      - name: Check portal JavaScript syntax
+        run: node --check server-installer/portal/assets/app.js
+
+      - name: Check scanner connection and sync status
+        run: php server-installer/tests/scanner-status.php
+
+      - name: Check browser polling and reconnection
+        run: node server-installer/tests/scanner-status-ui.cjs
+
