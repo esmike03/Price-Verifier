@@ -2,7 +2,8 @@ PRICE VERIFIER CPANEL UPLOAD PORTAL
 
 1. In cPanel File Manager, open public_html.
 2. Create a folder named price-verifier.
-3. Upload index.php, .htaccess, and .user.ini into that folder.
+3. Upload index.php, .htaccess, and .user.ini into that folder, plus the assets
+   folder containing app.css and app.js. Keep assets beside index.php.
 4. Upload any initial catalog and media files into the same folder.
 5. Open https://yourdomain.com/price-verifier/ in a browser.
 6. Create the client upload password on the first visit.
