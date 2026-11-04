@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://tools.android.com/tools"
+    android:id="@+id/mainRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/surface"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/displayArea"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:id="@+id/idleView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- clipChildren/clipToPadding are off so a logo scaled past the logo
+                 column can draw beyond it instead of being cut off. The column keeps
+                 its own width either way, so the banner never moves or resizes. -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/screen_padding">
+
+                <!-- Elevated so the overflowing logo paints over the banner rather
+                     than under it; no outline, so it casts no shadow. -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:clipChildren="false"
+                    android:elevation="1dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:outlineProvider="none">
+
+                    <!-- The current time, centred above the date; it keeps itself up
+                         to date. Always 12-hour, like the sync label below. -->
+                    <TextClock
+                        android:id="@+id/idleClock"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:format12Hour="h:mm:ss a"
+                        android:format24Hour="h:mm:ss a"
+                        android:maxLines="1"
+                        android:textColor="@color/ink"
+                        android:textSize="14sp"
+                        tools:text="8:05:32 AM" />
+
+                    <!-- This and the matching space above the sync label keep the
+                         logo, date and title centred in the column. -->
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <!-- The logo keeps its own aspect ratio (adjustViewBounds) and is
+                         bounded by maxWidth/maxHeight, which MainActivity rewrites from
+                         the admin logo-size slider. A fixed square box would letterbox a
+                         wide logo and clip it once scaled past the column width. -->
+                    <FrameLayout
+                        android:id="@+id/idleLogoFrame"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clipChildren="false">
+
+                        <ImageView
+                            android:id="@+id/idleLogo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:adjustViewBounds="true"
+                            android:contentDescription="@string/idle_logo_label"
+                            android:maxHeight="@dimen/idle_logo_size"
+                            android:maxWidth="@dimen/idle_logo_size"
+                            android:scaleType="fitCenter" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/idleMonth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:letterSpacing="0.18"
+                        android:textColor="@color/palette_blue"
+                        android:textSize="14sp"
+                        tools:text="MAY" />
+
+                    <TextView
+                        android:id="@+id/idleDay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:fontFamily="sans-serif-black"
+                        android:includeFontPadding="false"
+                        android:letterSpacing="-0.03"
+                        android:textColor="@color/ink"
+                        android:textSize="48sp"
+                        tools:text="29" />
+
+                    <View
+                        android:layout_width="32dp"
+                        android:layout_height="3dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/palette_red" />
+
+                    <TextView
+                        android:id="@+id/idleTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:fontFamily="sans-serif-medium"
+                        android:letterSpacing="0.01"
+                        android:lineSpacingMultiplier="1.05"
+                        android:paddingVertical="4dp"
+                        android:text="@string/app_name"
+                        android:textAlignment="center"
+                        android:textColor="@color/ink"
+                        android:textSize="18sp"
+                        tools:text="Price Verifier" />
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <!-- Last successful sync, in the bottom-left corner. Readable at a
+                         glance but in the muted slate, so it doesn't compete with the date. -->
+                    <TextView
+                        android:id="@+id/idleLastSync"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:maxLines="2"
+                        android:textColor="@color/muted"
+                        android:textSize="13sp"
+                        tools:text="Last sync: Sep 29, 2026 8:58 AM" />
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="@dimen/screen_padding"
+                    android:layout_height="match_parent" />
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="10">
+
+                    <ImageView
+                        android:id="@+id/idleBanner"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/idle_banner_label"
+                        android:scaleType="matrix" />
+
+                    <TextView
+                        android:id="@+id/idleBannerPlaceholder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="sans-serif"
+                        android:text="@string/idle_no_banner"
+                        android:textColor="@color/muted"
+                        android:textSize="13sp" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <com.priceverifier.ScrollingMarqueeView
+                android:id="@+id/idleMarquee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/marquee_bg"
+                android:fontFamily="sans-serif-black"
+                android:letterSpacing="0.03"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="10dp"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:text="@string/idle_default_marquee"
+                android:textColor="@color/marquee_text"
+                android:textSize="26sp" />
+        </LinearLayout>
+
+        <!-- The price check after a scan. PriceScreen draws its contents in the
+             layout and promo style chosen in Admin or the portal's Design tab. -->
+        <FrameLayout
+            android:id="@+id/productPanel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/check_bg"
+            android:visibility="gone" />
+
+        <TextureView
+            android:id="@+id/idleVideo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/videoStoreName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            android:layout_margin="20dp"
+            android:background="@drawable/store_name_frame"
+            android:elevation="14dp"
+            android:fontFamily="sans-serif-medium"
+            android:letterSpacing="0.04"
+            android:maxLines="1"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="8dp"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:visibility="gone"
+            tools:text="Newton Mart" />
+
+        <!-- Shown in place of videoStoreName when the admin picks the logo option.
+             Same corner and elevation, so the two are interchangeable. -->
+        <ImageView
+            android:id="@+id/videoStoreLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            android:layout_margin="20dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/idle_logo_label"
+            android:elevation="14dp"
+            android:maxHeight="@dimen/video_logo_height"
+            android:maxWidth="@dimen/video_logo_max_width"
+            android:scaleType="fitCenter"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/scanHerePrompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="@dimen/scan_prompt_bottom_margin"
+            android:background="@drawable/scan_prompt_badge"
+            android:drawablePadding="2dp"
+            android:drawableEnd="@drawable/ic_arrow_down_green"
+            android:drawableStart="@drawable/ic_arrow_down_green"
+            android:elevation="12dp"
+            android:fontFamily="sans-serif-black"
+            android:letterSpacing="0.08"
+            android:paddingHorizontal="28dp"
+            android:paddingVertical="10dp"
+            android:shadowColor="#CC00E676"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="12"
+            android:text="@string/scan_here"
+            android:textColor="#00E676"
+            android:textSize="@dimen/scan_prompt_text_size" />
+
+        <!-- Always-on-top banner for unregistered devices. Highest elevation in
+             the display area, so it stays visible over the idle view, the product
+             panel, and the playing video. -->
+        <TextView
+            android:id="@+id/notRegisteredBanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:background="@drawable/not_registered_border"
+            android:elevation="24dp"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:letterSpacing="0.04"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="10dp"
+            android:text="@string/device_not_registered"
+            android:textColor="@color/palette_red"
+            android:textSize="20sp"
+            android:visibility="gone" />
+
+    </FrameLayout>
+
+    <EditText
+        android:id="@+id/scannerInput"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:alpha="0"
+        android:background="@android:color/transparent"
+        android:cursorVisible="false"
+        android:hint="@string/scanner_input"
+        android:imeOptions="actionDone"
+        android:importantForAccessibility="no"
+        android:importantForAutofill="no"
+        android:inputType="textVisiblePassword|textNoSuggestions"
+        android:singleLine="true" />
+</LinearLayout>

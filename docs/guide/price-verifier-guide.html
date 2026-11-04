@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Price Verifier - User and Administrator Guide</title>
+<style>
+  @page { size: A4; margin: 18mm 17mm 20mm 17mm; }
+  :root {
+    --ink: #0f172a; --soft: #475569; --faint: #94a3b8; --line: #e2e8f0;
+    --brand: #1668a5; --brand-tint: #e8f2fa; --red: #dc2626; --green: #15803d;
+    --warn: #b45309; --warn-tint: #fff7ed; --tip-tint: #ecfdf5;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { margin: 0; color: var(--ink); font-family: "Segoe UI", Roboto, Arial, sans-serif; font-size: 10.5pt; line-height: 1.5; }
+  h1, h2, h3, h4 { line-height: 1.25; margin: 0; }
+  p { margin: 0 0 8pt; }
+  ul, ol { margin: 0 0 8pt; padding-left: 18pt; }
+  li { margin-bottom: 3pt; }
+  code, .mono { font-family: Consolas, "Courier New", monospace; font-size: 9.5pt; background: #f1f5f9; padding: 0 3pt; border-radius: 3pt; }
+  pre { font-family: Consolas, "Courier New", monospace; font-size: 9pt; background: #f1f5f9; border: 1px solid var(--line); border-radius: 6pt; padding: 7pt 9pt; white-space: pre-wrap; margin: 0 0 9pt; }
+  strong { font-weight: 650; }
+
+  /* Cover */
+  .cover { height: 257mm; display: flex; flex-direction: column; justify-content: space-between; page-break-after: always; }
+  .cover-band { background: linear-gradient(135deg, #0f4c81, #1668a5 60%, #2b8cd0); color: #fff; border-radius: 14pt; padding: 38pt 34pt 34pt; }
+  .cover-mark { width: 46pt; height: 46pt; border-radius: 12pt; background: rgba(255,255,255,.18); display: flex; align-items: center; justify-content: center; margin-bottom: 26pt; }
+  .cover h1 { font-size: 30pt; font-weight: 750; letter-spacing: -.01em; }
+  .cover .subtitle { font-size: 14pt; opacity: .92; margin-top: 8pt; }
+  .cover .scope { margin-top: 26pt; font-size: 10.5pt; opacity: .9; }
+  .cover-shots { display: flex; gap: 10pt; margin: 20pt 0; }
+  .cover-shots img { width: 50%; border-radius: 8pt; border: 1px solid var(--line); }
+  .cover-foot { border-top: 2pt solid var(--brand); padding-top: 12pt; display: flex; justify-content: space-between; font-size: 9.5pt; color: var(--soft); }
+  .cover-foot strong { color: var(--ink); font-size: 11pt; }
+
+  /* Sections */
+  .part { page-break-before: always; }
+  .part-label { color: var(--brand); font-size: 9pt; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 4pt; }
+  h2 { font-size: 19pt; font-weight: 700; margin-bottom: 4pt; }
+  .lead { color: var(--soft); font-size: 11pt; margin-bottom: 14pt; }
+  h3 { font-size: 13.5pt; font-weight: 700; margin: 16pt 0 6pt; padding-top: 4pt; border-top: 1px solid var(--line); page-break-after: avoid; }
+  h4 { font-size: 11pt; font-weight: 700; margin: 11pt 0 4pt; page-break-after: avoid; }
+  .keep { page-break-inside: avoid; }
+  /* Keep headings and intro lines with the content that follows them. */
+  h2, h3, h4, .lead, .keep-next { break-after: avoid; page-break-after: avoid; }
+  .lead, .note, .tip, .warn, li { break-inside: avoid; page-break-inside: avoid; }
+  .section-start { break-inside: avoid; page-break-inside: avoid; }
+
+  figure { margin: 6pt 0 12pt; page-break-inside: avoid; }
+  figure img { display: block; max-width: 100%; border: 1px solid var(--line); border-radius: 6pt; }
+  figure.device img { width: 78%; margin: 0 auto; border-radius: 9pt; border: 3pt solid #1e293b; }
+  figure.half { display: inline-block; width: 49%; vertical-align: top; margin-right: 1%; }
+  figure.half img { width: 100%; border: 2pt solid #1e293b; border-radius: 7pt; }
+  figcaption { color: var(--soft); font-size: 9pt; text-align: center; margin-top: 4pt; }
+
+  table { width: 100%; border-collapse: collapse; margin: 4pt 0 11pt; font-size: 9.5pt; page-break-inside: auto; }
+  tr { page-break-inside: avoid; }
+  th { background: #f1f5f9; text-align: left; font-weight: 650; padding: 5pt 7pt; border-bottom: 1.5pt solid var(--line); }
+  td { padding: 5pt 7pt; border-bottom: 1px solid var(--line); vertical-align: top; }
+
+  .note, .tip, .warn { border-radius: 7pt; padding: 8pt 10pt; margin: 6pt 0 11pt; font-size: 9.8pt; page-break-inside: avoid; }
+  .note { background: var(--brand-tint); border-left: 3.5pt solid var(--brand); }
+  .tip { background: var(--tip-tint); border-left: 3.5pt solid var(--green); }
+  .warn { background: var(--warn-tint); border-left: 3.5pt solid var(--warn); }
+  .note strong:first-child, .tip strong:first-child, .warn strong:first-child { display: block; margin-bottom: 2pt; }
+
+  .steps { counter-reset: step; list-style: none; padding-left: 0; }
+  .steps > li { counter-increment: step; position: relative; padding-left: 24pt; margin-bottom: 6pt; }
+  .steps > li::before { content: counter(step); position: absolute; left: 0; top: 0; width: 16pt; height: 16pt; border-radius: 50%; background: var(--brand); color: #fff; font-size: 8.5pt; font-weight: 700; text-align: center; line-height: 16pt; }
+
+  .toc { columns: 1; margin-top: 10pt; }
+  .toc-part { font-weight: 700; color: var(--brand); margin: 10pt 0 3pt; font-size: 10pt; letter-spacing: .06em; text-transform: uppercase; }
+  .toc ol { margin: 0; padding-left: 16pt; }
+  .toc li { margin: 2pt 0; }
+
+  .kbd { display: inline-block; border: 1px solid #cbd5e1; border-bottom-width: 2px; border-radius: 4pt; padding: 0 5pt; font-size: 9pt; background: #fff; }
+  .pill { display: inline-block; border-radius: 5pt; padding: 0 6pt; font-size: 8.5pt; font-weight: 700; letter-spacing: .04em; }
+  .pill.promo { background: #fee2e2; color: var(--red); }
+  .pill.special { background: #dbeafe; color: #1d4ed8; }
+  .diagram { width: 100%; margin: 4pt 0 12pt; }
+</style>
+</head>
+<body>
+
+<!-- ============================== COVER ============================== -->
+<section class="cover">
+  <div>
+    <div class="cover-band">
+      <div class="cover-mark">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11V5a2 2 0 0 1 2-2h6l10 10-8 8L3 11Z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>
+      </div>
+      <h1>Price Verifier</h1>
+      <div class="subtitle">User and Administrator Guide</div>
+      <div class="scope">Covers the Price Verifier scanner app and the Price Verifier Server (web portal):
+        daily use, content management, promos, design, installation and troubleshooting.</div>
+    </div>
+    <div class="cover-shots">
+      <img src="img/app-promo.png" alt="Price check with a promo">
+      <img src="img/portal-promos.png" alt="Web portal Promos tab">
+    </div>
+  </div>
+  <div class="cover-foot">
+    <div><strong>Newton Scanning Systems Inc.</strong><br>newtonscanning.com &middot; program@newton.com.ph &middot; inquiry@newton.com.ph</div>
+    <div style="text-align:right">Scanner app v5 &middot; Server 1.0.0<br>September 2026</div>
+  </div>
+</section>
+
+<!-- ============================== CONTENTS ============================== -->
+<section>
+  <div class="part-label">Contents</div>
+  <h2>What's in this guide</h2>
+  <p class="lead">The guide is split by who uses each part. Store staff only need Part B. Store administrators use Parts C and D. IT staff installing the server use Part E.</p>
+  <div class="toc">
+    <div class="toc-part">Part A &mdash; Overview</div>
+    <ol><li>How the Price Verifier works</li></ol>
+    <div class="toc-part">Part B &mdash; For store staff</div>
+    <ol start="2"><li>Using the scanner</li><li>Promos and special prices on the scanner</li></ol>
+    <div class="toc-part">Part C &mdash; For store administrators: the web portal</div>
+    <ol start="4"><li>Opening the web portal</li><li>Display media</li><li>Catalog</li><li>Promos</li><li>Design</li><li>App update</li></ol>
+    <div class="toc-part">Part D &mdash; For store administrators: the scanner's Admin screen</div>
+    <ol start="10"><li>Opening Admin</li><li>Admin modules</li><li>Promos on a single scanner</li><li>Authorized scanners</li></ol>
+    <div class="toc-part">Part E &mdash; For IT: installing and maintaining the server</div>
+    <ol start="14"><li>Requirements</li><li>Installing on Windows</li><li>Installing on Linux</li><li>Connecting the scanners</li><li>Maintenance, backup and updates</li><li>Troubleshooting</li></ol>
+    <div class="toc-part">Appendices</div>
+    <ol type="A"><li>Catalog file format</li><li>Promos file format</li><li>Scheduled media file names</li><li>Files on the server</li><li>Support</li></ol>
+  </div>
+</section>
+
+<!-- ============================== PART A ============================== -->
+<section class="part">
+  <div class="part-label">Part A &mdash; Overview</div>
+  <h2>1. How the Price Verifier works</h2>
+  <p class="lead">Customers scan a product at a Price Verifier scanner and see its name and price. Between scans the scanner shows your store's logo, banners, videos and a scrolling message.</p>
+
+  <svg class="diagram" viewBox="0 0 700 210" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+    <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1668a5"/></marker></defs>
+    <rect x="245" y="40" width="210" height="120" rx="12" fill="#e8f2fa" stroke="#1668a5" stroke-width="1.5"/>
+    <text x="350" y="68" text-anchor="middle" font-size="15" font-weight="700" fill="#0f172a">Price Verifier Server</text>
+    <text x="350" y="88" text-anchor="middle" font-size="11" fill="#475569">on a store PC or server</text>
+    <text x="350" y="112" text-anchor="middle" font-size="11" fill="#0f172a">Web portal &#183; catalog &#183; media</text>
+    <text x="350" y="128" text-anchor="middle" font-size="11" fill="#0f172a">promos &#183; design &#183; app updates</text>
+    <text x="350" y="148" text-anchor="middle" font-size="10" fill="#1668a5">http://&lt;server-ip&gt;:8000</text>
+    <rect x="15" y="60" width="165" height="80" rx="10" fill="#fff" stroke="#94a3b8"/>
+    <text x="97" y="92" text-anchor="middle" font-size="13" font-weight="650" fill="#0f172a">Office PC browser</text>
+    <text x="97" y="112" text-anchor="middle" font-size="10.5" fill="#475569">administrators manage</text>
+    <text x="97" y="126" text-anchor="middle" font-size="10.5" fill="#475569">content in the portal</text>
+    <rect x="520" y="60" width="165" height="80" rx="10" fill="#fff" stroke="#94a3b8"/>
+    <text x="602" y="92" text-anchor="middle" font-size="13" font-weight="650" fill="#0f172a">Scanners</text>
+    <text x="602" y="112" text-anchor="middle" font-size="10.5" fill="#475569">sync over Wi-Fi / LAN,</text>
+    <text x="602" y="126" text-anchor="middle" font-size="10.5" fill="#475569">then work offline</text>
+    <line x1="182" y1="100" x2="241" y2="100" stroke="#1668a5" stroke-width="2" marker-end="url(#a)" marker-start="url(#a)"/>
+    <line x1="459" y1="100" x2="516" y2="100" stroke="#1668a5" stroke-width="2" marker-end="url(#a)" marker-start="url(#a)"/>
+    <text x="350" y="195" text-anchor="middle" font-size="10.5" fill="#475569">Everything stays on the store's local network. The server refuses connections from the internet.</text>
+  </svg>
+
+  <table>
+    <tr><th style="width:26%">Part</th><th>What it does</th></tr>
+    <tr><td><strong>Scanner app</strong></td><td>Runs on each Price Verifier scanner (Datalogic Smart Portal and similar Android devices). Keeps its own copy of the product list, so price checks keep working even if the network drops.</td></tr>
+    <tr><td><strong>Price Verifier Server</strong></td><td>Installed once on a store PC or server. Holds the catalog, display media, scrolling message, promos, design settings and app updates that the scanners download.</td></tr>
+    <tr><td><strong>Web portal</strong></td><td>The server's web page. Administrators open it in a browser on any computer in the store network to upload files and manage promos and design.</td></tr>
+  </table>
+
+  <h4>How information flows</h4>
+  <ol>
+    <li>An administrator uploads or edits content in the web portal.</li>
+    <li>Each scanner <strong>syncs</strong> with the server: automatically once a day (by default at 02:00), or when someone taps a sync button in the scanner's Admin screen.</li>
+    <li>After syncing, the scanner works from its own copy until the next sync.</li>
+  </ol>
+  <div class="note"><strong>Changes are not instant</strong>A change made in the portal reaches a scanner at its next sync. To see a change right away, run a manual sync on the scanner (Admin &gt; Sync, section 11).</div>
+</section>
+
+<!-- ============================== PART B ============================== -->
+<section class="part">
+  <div class="part-label">Part B &mdash; For store staff</div>
+  <h2>2. Using the scanner</h2>
+  <p class="lead">The scanner needs no login for price checks. Customers and staff simply scan.</p>
+
+  <h3>The home screen</h3>
+  <figure class="device"><img src="img/app-idle.png" alt="Scanner home screen"><figcaption>Home screen: logo, today's date, banner or video, the "SCAN HERE" prompt and the scrolling message.</figcaption></figure>
+  <ul>
+    <li><strong>Left column:</strong> store logo, today's date and the "Price Verifier" title.</li>
+    <li><strong>Main area:</strong> the store banner, videos and scheduled promotional media, shown in rotation.</li>
+    <li><strong>Bottom bar:</strong> the scrolling message.</li>
+    <li><strong>Bottom-left corner:</strong> the last successful sync time, for example <em>Last sync: Sep 29, 2026 10:37 AM</em>. If it's several days old, tell an administrator.</li>
+    <li>While a video plays, tapping it returns to the banner.</li>
+  </ul>
+
+  <h3>Checking a price</h3>
+  <ol class="steps">
+    <li>Point the product's barcode at the scanner window, below the <strong>SCAN HERE</strong> prompt.</li>
+    <li>The screen shows the product name (with its unit, such as <em>case</em> or <em>pc</em>), the barcode and the price in pesos.</li>
+    <li>After about <strong>7 seconds</strong> the scanner returns to the home screen. Scanning another item shows it straight away.</li>
+  </ol>
+  <figure class="device"><img src="img/app-price.png" alt="Price check"><figcaption>A regular price check.</figcaption></figure>
+
+  <h4>"No product record"</h4>
+  <p>If the barcode isn't in the scanner's product list, the screen shows <strong>No product record &mdash; Ask for assistance</strong>. Check the price another way and tell an administrator, who can add the item (section 6 or 11).</p>
+
+  <h4>"Demo Mode" banner</h4>
+  <p>A red <strong>Demo Mode. Contact Newton Scanning System Inc.</strong> banner means the device isn't authorized to run the app. See section 13.</p>
+</section>
+
+<section>
+  <h2 style="margin-top:14pt">3. Promos and special prices on the scanner</h2>
+  <p class="lead">When a scanned product has a promo or special price, the scanner shows it automatically. There's nothing to do on the scanner.</p>
+  <figure class="device"><img src="img/app-promo.png" alt="Promo price check"><figcaption>A 50% off promo: the promo price is the big number, the regular price is crossed out, and a red PROMO banner shows the deal and end date.</figcaption></figure>
+  <figure class="half"><img src="img/app-special.png" alt="Special price"><figcaption>SPECIAL PRICE (blue banner) with a Buy 1 Take 1 deal alongside.</figcaption></figure>
+  <figure class="half"><img src="img/app-b1t1.png" alt="Buy 1 Take 1"><figcaption>Buy 1 Take 1: the regular price stays; the banner names the deal.</figcaption></figure>
+  <table class="keep">
+    <tr><th style="width:30%">What you see</th><th>Meaning</th></tr>
+    <tr><td>Big price + crossed-out price above it</td><td>The big number is what the customer pays. The crossed-out one is the regular price.</td></tr>
+    <tr><td><span class="pill promo">PROMO</span> red banner</td><td>A promotion, for example <em>50% OFF</em>, <em>&#8369;20.00 OFF</em> or <em>SAVE &#8369;8.25</em>.</td></tr>
+    <tr><td><span class="pill special">SPECIAL PRICE</span> blue banner</td><td>A special price. It works the same way; only the label and colour differ.</td></tr>
+    <tr><td>BUY 1 TAKE 1, BUY 2 TAKE 1&hellip;</td><td>A buy-and-take deal. The regular price stays the big number.</td></tr>
+    <tr><td>"Until Oct 31, 2026"</td><td>The last day of the promo. The day after, the scanner shows the regular price again by itself.</td></tr>
+  </table>
+</section>
+
+<!-- ============================== PART C ============================== -->
+<section class="part">
+  <div class="part-label">Part C &mdash; For store administrators: the web portal</div>
+  <h2>4. Opening the web portal</h2>
+  <p class="lead">Use any computer on the store network. Your IT staff give you the address, which looks like <code>http://192.168.0.130:8000</code>.</p>
+  <ol class="steps">
+    <li>Open a web browser (Chrome, Edge or Firefox) and go to the portal address.</li>
+    <li><strong>First visit only:</strong> the portal asks you to create the upload password (at least 10 characters). Keep it safe; everyone who manages content uses it.</li>
+    <li>Afterwards, enter the password and choose <strong>Sign in</strong>.</li>
+  </ol>
+  <figure><img src="img/portal-signin.png" alt="Sign in" style="width:80%;margin:0 auto"><figcaption>Portal sign-in.</figcaption></figure>
+  <p>The portal has five tabs:</p>
+  <table>
+    <tr><th style="width:20%">Tab</th><th>Use it to</th></tr>
+    <tr><td><strong>Display media</strong></td><td>Upload the catalog file, logo, banner, idle video, scheduled media, scrolling message and the Android app; set the playback order.</td></tr>
+    <tr><td><strong>Catalog</strong></td><td>Search, add, edit and delete products.</td></tr>
+    <tr><td><strong>Promos</strong></td><td>Create promos and special prices, or upload them from a CSV file.</td></tr>
+    <tr><td><strong>Design</strong></td><td>Set the scanners' colours, logo size, store name and media timing for every scanner at once.</td></tr>
+    <tr><td><strong>App update</strong></td><td>Describe a new app version for the scanners' update prompt.</td></tr>
+  </table>
+  <div class="tip"><strong>Dark or light</strong>The sun/moon button at the top right switches the portal's colour theme. It only affects your browser.</div>
+</section>
+
+<section>
+  <h2 style="margin-top:14pt">5. Display media</h2>
+  <figure><img src="img/portal-media.png" alt="Display media tab"><figcaption>Display media: each card is one kind of file. Click a card to upload, replace or remove its file.</figcaption></figure>
+  <table>
+    <tr><th style="width:26%">Card</th><th style="width:26%">Accepted files</th><th>Notes</th></tr>
+    <tr><td><strong>Product catalog</strong></td><td><code>.csv</code> or <code>.txt</code></td><td>The full product list. Uploading replaces the whole catalog. Format: Appendix A.</td></tr>
+    <tr><td><strong>Android app</strong></td><td><code>.apk</code></td><td>A new scanner app version. Scanners offer it as an update (section 9).</td></tr>
+    <tr><td><strong>Store logo</strong></td><td>PNG or JPG</td><td>Shown on the home screen. Resized automatically.</td></tr>
+    <tr><td><strong>Display banner</strong></td><td>PNG or JPG</td><td>The default home-screen image. Resized automatically.</td></tr>
+    <tr><td><strong>Scheduled display media</strong></td><td>JPG, PNG or MP4</td><td>Time-limited promotional images and videos. They only play once renamed with an end date (Appendix C).</td></tr>
+    <tr><td><strong>Idle video</strong></td><td>MP4</td><td>The default home-screen video.</td></tr>
+    <tr><td><strong>Scrolling message</strong></td><td><code>.txt</code></td><td>The text in the scrolling bar at the bottom of the home screen.</td></tr>
+  </table>
+
+  <h4>Scheduled display media</h4>
+  <figure><img src="img/portal-schedule-modal.png" alt="Scheduled display media" style="width:80%;margin:0 auto"><figcaption>Upload scheduled images and videos separately, then rename each to its schedule.</figcaption></figure>
+  <ol class="steps">
+    <li>Click <strong>Scheduled display media</strong>, choose images or videos, and upload.</li>
+    <li>Rename each file to the scheduled format, for example <code>103126.jpg</code> (shows until October 31, 2026) or <code>103126_15.jpg</code> (15 seconds per turn). See Appendix C.</li>
+    <li>Files past their date stop playing automatically.</li>
+  </ol>
+
+  <h4>Playback order</h4>
+  <p>Below the cards, <strong>Playback order</strong> lists the banner, idle video and active scheduled media. Drag a row, or type a position and press <span class="kbd">Tab</span>, then save. Scanners use this order after their next sync, unless a scanner has its own order set in its Admin screen.</p>
+</section>
+
+<section>
+  <h2 style="margin-top:14pt">6. Catalog</h2>
+  <p class="lead">Browse and correct the hosted product list without re-uploading the whole file.</p>
+  <figure><img src="img/portal-catalog.png" alt="Catalog tab"><figcaption>Catalog: search as you type; prices show in pesos.</figcaption></figure>
+  <ul>
+    <li><strong>Search:</strong> type part of a barcode, name, category or item code. Results update as you type. Press <span class="kbd">/</span> to jump to the search box.</li>
+    <li><strong>Edit:</strong> click a product row (or its pencil button), change the details and choose <strong>Save item</strong>.</li>
+    <li><strong>Add:</strong> choose <strong>+ Add product</strong>. Entering an existing barcode updates that product instead of adding a second one.</li>
+    <li><strong>Delete:</strong> open the product and choose <strong>Delete this item</strong>.</li>
+  </ul>
+  <figure><img src="img/portal-item-modal.png" alt="Edit product" style="width:80%;margin:0 auto"><figcaption>Editing a product.</figcaption></figure>
+  <div class="warn"><strong>A new catalog upload replaces edits</strong>Editing in the portal changes the hosted catalog file. If you later upload a fresh catalog from the POS, it replaces the whole list, including any edits made here.</div>
+</section>
+
+<section>
+  <h2 style="margin-top:14pt">7. Promos</h2>
+  <p class="lead">Promos and special prices are stored separately from the catalog, so uploading a new catalog never removes them.</p>
+  <figure><img src="img/portal-promos.png" alt="Promos tab"><figcaption>Promos: each promo with its product, deal, promo price, dates and status.</figcaption></figure>
+  <h4>Adding a promo</h4>
+  <ol class="steps">
+    <li>Choose <strong>+ Add promo</strong>.</li>
+    <li>Enter the product <strong>barcode</strong>. The portal shows the product name and regular price when it finds it in the catalog.</li>
+    <li>Choose <strong>Promo</strong> or <strong>Special price</strong>. This only changes the banner label and colour on the scanner.</li>
+    <li>Choose the <strong>type</strong> and fill in its value (table below), then the <strong>start</strong> and <strong>end</strong> dates.</li>
+    <li>Check the preview (for example <em>&#8369;40.50 &rarr; &#8369;28.35</em>) and choose <strong>Add promo</strong>.</li>
+  </ol>
+  <figure><img src="img/portal-promo-form.png" alt="Promo form" style="width:80%;margin:0 auto"><figcaption>The promo form with a live price preview.</figcaption></figure>
+  <table class="keep">
+    <tr><th style="width:22%">Type</th><th style="width:28%">You enter</th><th>Scanner shows</th></tr>
+    <tr><td>Percent off</td><td>e.g. <code>50</code> (%)</td><td>50% OFF, with the reduced price</td></tr>
+    <tr><td>Amount off</td><td>e.g. <code>20.00</code> (&#8369;)</td><td>&#8369;20.00 OFF, with the reduced price</td></tr>
+    <tr><td>Fixed promo price</td><td>e.g. <code>99.00</code> (&#8369;)</td><td>The fixed price and the amount saved</td></tr>
+    <tr><td>Buy X Take Y</td><td>Buy and Take quantities</td><td>BUY 1 TAKE 1 (the regular price stays)</td></tr>
+  </table>
+  <h4>Rules the scanners follow</h4>
+  <ul>
+    <li>A promo is active from its start date through its end date, both days included, by the scanner's own clock.</li>
+    <li>If a product has several active promos, the scanner shows the <strong>lowest resulting price</strong>, with any Buy X Take Y deal shown alongside.</li>
+    <li>A promo price at or above the regular price is ignored.</li>
+    <li>Promos set here replace any promo created on an individual scanner for the same product (section 12).</li>
+  </ul>
+  <h4>Statuses and tools</h4>
+  <ul>
+    <li><strong>Active / Scheduled / Ended</strong> show where each promo is in its dates. Use the filter buttons and search box to find promos.</li>
+    <li><strong>Not in catalog</strong> (in red) means the barcode isn't in the catalog, so scanners can't show that promo.</li>
+    <li><strong>Upload CSV</strong> replaces all promos with the contents of a file (format: Appendix B). The portal reports any lines it couldn't read.</li>
+    <li><strong>Download CSV</strong> saves the current promos; <strong>Remove ended</strong> deletes promos whose end date has passed.</li>
+  </ul>
+</section>
+
+<section>
+  <h2 style="margin-top:14pt">8. Design</h2>
+  <p class="lead">Set how every scanner connected to the server looks, from one place.</p>
+  <figure><img src="img/portal-design.png" alt="Design tab" style="width:88%;margin:0 auto"><figcaption>Design: tick a setting to control it from the server. The preview on the right updates as you edit.</figcaption></figure>
+  <ul>
+    <li><strong>Price check screen:</strong> background, product name, barcode and price colours.</li>
+    <li><strong>Idle screen:</strong> "Scan here" prompt colour, logo size, store name shown over videos, or the logo instead.</li>
+    <li><strong>Scrolling message:</strong> background and text colours. The message text itself is set in Display media.</li>
+    <li><strong>Idle media timing:</strong> how long each image shows, and how long each video plays (0 = the whole video).</li>
+  </ul>
+  <div class="note"><strong>The server's design wins</strong>Only <em>ticked</em> settings are sent to the scanners. At every sync, the scanners take the ticked values and replace any change made in their own Admin screen. Unticked settings stay as each scanner has them. <strong>Reset to app defaults</strong> fills in the original colours and ticks everything; <strong>Untick all</strong> hands control back to each scanner.</div>
+</section>
+
+<section>
+  <h2 style="margin-top:14pt">9. App update</h2>
+  <figure><img src="img/portal-app-update.png" alt="App update" style="width:85%;margin:0 auto"><figcaption>App update details shown on the scanners.</figcaption></figure>
+  <ol class="steps">
+    <li>In <strong>Display media</strong>, upload the new app file to the <strong>Android app</strong> card.</li>
+    <li>In <strong>App update</strong>, enter the version (for example <code>v6</code>) and a short list of changes, then choose <strong>Save update details</strong>.</li>
+    <li>Scanners check for a new version about every 5 minutes. When one is available they show <strong>New version available</strong> with the version and changes; tapping <strong>Download</strong> installs it.</li>
+  </ol>
+  <div class="warn"><strong>Version numbers must increase</strong>Android only installs an update with a higher version number than the installed app. Ask your developer to raise the version for each release.</div>
+</section>
+
+<!-- ============================== PART D ============================== -->
+<section class="part">
+  <div class="part-label">Part D &mdash; For store administrators: the scanner's Admin screen</div>
+  <h2>10. Opening Admin</h2>
+  <ol class="steps">
+    <li>On the home screen, <strong>press and hold</strong> the "Price Verifier" title in the left column for about a second.</li>
+    <li>Enter the Admin PIN and choose <strong>Unlock</strong>. The PIN is <strong><code>1234</code></strong>.</li>
+    <li>Use <strong>Back</strong> (top left) to return to the home screen.</li>
+  </ol>
+  <figure class="device"><img src="img/app-pin.png" alt="PIN entry"><figcaption>Admin PIN entry.</figcaption></figure>
+  <div class="warn"><strong>Keep the PIN private</strong>Anyone with the PIN can change products and settings on a scanner. Changing the PIN is disabled in this version.</div>
+
+  <h2 style="margin-top:14pt">11. Admin modules</h2>
+  <figure class="device"><img src="img/app-admin.png" alt="Admin menu"><figcaption>The Admin menu.</figcaption></figure>
+  <table>
+    <tr><th style="width:24%">Module</th><th>What you can do</th></tr>
+    <tr><td><strong>Product Catalog</strong></td><td>See how many products are on the scanner. <strong>Import TXT or CSV</strong> loads a product file from the device (Appendix A). <strong>View and Edit Items</strong> searches, edits and deletes products, and manages promos for one item (section 12). <strong>Clear Product Database</strong> removes all products from this scanner; settings and media stay.</td></tr>
+    <tr><td><strong>Add or Update Item</strong></td><td>Add one product by hand: barcode, name, price and optional unit, category and item code. An existing barcode is updated.</td></tr>
+    <tr><td><strong>Default Display</strong></td><td>Logo and logo size, default image, default video, store name shown over videos (or the logo instead), scrolling message and its colours, "SCAN HERE" colour, and image/video display times.</td></tr>
+    <tr><td><strong>Scheduled Media</strong></td><td>Upload, rename or remove scheduled images and videos stored on this scanner (naming: Appendix C).</td></tr>
+    <tr><td><strong>Price Check Display</strong></td><td>Background, product name, barcode and price colours, with a live preview.</td></tr>
+    <tr><td><strong>Sync</strong></td><td>Server URL, manual sync and daily auto-sync (below).</td></tr>
+    <tr><td><strong>Security</strong></td><td>Admin PIN. Changing it is disabled in this version.</td></tr>
+  </table>
+  <figure class="device"><img src="img/app-pricecheck-settings.png" alt="Price check display settings"><figcaption>When the server's Design tab manages these settings, an orange note warns that changes made here are replaced at the next sync.</figcaption></figure>
+
+  <h3>Sync</h3>
+  <figure class="device"><img src="img/app-sync.png" alt="Sync"><figcaption>Sync: server URL, manual sync buttons and daily auto-sync.</figcaption></figure>
+  <ul>
+    <li><strong>Server URL:</strong> the address of the Price Verifier Server, for example <code>http://192.168.0.130:8000</code>. Choose <strong>Save URL</strong>.</li>
+    <li><strong>Manual sync:</strong>
+      <ul>
+        <li><strong>Items</strong> downloads the catalog and promos.</li>
+        <li><strong>Images</strong> downloads the logo, banner, scheduled images and scrolling message.</li>
+        <li><strong>Videos</strong> downloads videos.</li>
+        <li>Every sync also applies the server's Design settings.</li>
+      </ul>
+      The result appears below the buttons, for example <em>Sync complete (design, image, message)</em>.</li>
+    <li><strong>Daily auto-sync:</strong> tick it and choose a time (default 02:00) to sync everything once a day. If the server was unreachable at that time, run a manual sync or wait for the next day.</li>
+  </ul>
+  <div class="note"><strong>Products added on the scanner are kept</strong>Syncing items adds and updates products from the server. Products added only on this scanner stay.</div>
+</section>
+
+<section>
+  <h2 style="margin-top:14pt">12. Promos on a single scanner</h2>
+  <p>You can give one scanner its own promo, for example for a local clearance:</p>
+  <ol class="steps">
+    <li>Admin &gt; <strong>Product Catalog</strong> &gt; <strong>View and Edit Items</strong>, then tap the product.</li>
+    <li>Choose <strong>Promos &amp; special prices</strong>. The list shows this product's promos; promos marked <em>from server</em> can only be changed in the web portal.</li>
+    <li>Choose <strong>Add promo</strong>, pick Promo or Special price, the type, the value and the dates, then <strong>Save</strong>. Tap an existing device promo to edit or delete it.</li>
+  </ol>
+  <div class="note"><strong>The server wins</strong>If the web portal later gets a promo for the same product, the server's promo replaces this scanner's promos for that product at the next sync.</div>
+
+  <h2 style="margin-top:14pt">13. Authorized scanners</h2>
+  <p>The app only runs fully on scanners whose serial numbers are built into the app.</p>
+  <ul>
+    <li>On a scanner that isn't authorized, the home screen shows <strong>Demo Mode. Contact Newton Scanning System Inc.</strong>, and Admin shows <strong>Device not authorized</strong> with the device's serial number.</li>
+    <li>To authorize a new scanner, send that serial number to Newton Scanning Systems. A new app version with the serial added is then installed on the scanners.</li>
+  </ul>
+</section>
+
+<!-- ============================== PART E ============================== -->
+<section class="part">
+  <div class="part-label">Part E &mdash; For IT: installing and maintaining the server</div>
+  <h2>14. Requirements</h2>
+  <table>
+    <tr><th style="width:26%">Item</th><th>Requirement</th></tr>
+    <tr><td>Operating system</td><td>64-bit Windows 10 or 11, Windows Server 2016 or later, or 64-bit (x86_64) Linux with systemd (Ubuntu, Debian, RHEL and similar).</td></tr>
+    <tr><td>Network</td><td>The server and the scanners on the same local network. A fixed IP address (DHCP reservation) for the server is strongly recommended, because scanners use its address.</td></tr>
+    <tr><td>Disk</td><td>About 200 MB for the program plus room for the catalog and media (a 330,000-product catalog is about 20 MB).</td></tr>
+    <tr><td>Internet</td><td>Not needed. The installer contains everything (PHP, web server and the Microsoft Visual C++ runtime for Windows).</td></tr>
+    <tr><td>Rights</td><td>Administrator (Windows) or root (Linux) to install.</td></tr>
+  </table>
+
+  <h2 style="margin-top:14pt">15. Installing on Windows</h2>
+  <ol class="steps">
+    <li>Copy <code>PriceVerifierServer-Windows-1.0.0.zip</code> to the server and extract it (right-click &gt; Extract All).</li>
+    <li>Double-click <code>install.cmd</code> and allow administrator access.</li>
+    <li>Answer the questions:
+      <ul>
+        <li><strong>Port</strong>: default 8000. If it's in use, the installer suggests another.</li>
+        <li><strong>Import data</strong>: optionally the path of an existing portal folder (catalog, media, promos, design and portal password), or leave blank to start empty.</li>
+      </ul></li>
+    <li>The installer checks that the server answers and prints the addresses to use, for example <code>http://192.168.0.130:8000</code>.</li>
+  </ol>
+  <table class="keep">
+    <tr><th style="width:26%">What gets set up</th><th>Details</th></tr>
+    <tr><td>Program and data</td><td><code>C:\PriceVerifier</code>. The portal and its data are in <code>portal\</code>; logs are in <code>logs\</code>.</td></tr>
+    <tr><td>Automatic start</td><td>Task Scheduler task <strong>Price Verifier Server</strong>. It runs as SYSTEM at boot, before anyone logs in, and restarts parts that stop.</td></tr>
+    <tr><td>Local network only</td><td>Windows Defender Firewall rule <strong>Price Verifier Server</strong> (local subnet only). The web server also refuses non-private addresses, even if the port is forwarded on the router.</td></tr>
+    <tr><td>Upgrade</td><td>Run the installer of a newer version. Program files are replaced; data and the port are kept.</td></tr>
+    <tr><td>Uninstall</td><td><code>C:\PriceVerifier\uninstall.cmd</code> (as administrator). It asks whether to keep the portal data.</td></tr>
+  </table>
+  <p class="keep-next">Unattended install:</p>
+  <pre>powershell -ExecutionPolicy Bypass -File install.ps1 -Port 8000 -ImportFrom "" -Quiet</pre>
+
+  <h2 style="margin-top:14pt">16. Installing on Linux</h2>
+  <pre>tar -xzf PriceVerifierServer-Linux-1.0.0.tar.gz
+cd PriceVerifierServer-Linux-1.0.0
+sudo bash install.sh</pre>
+  <table class="keep">
+    <tr><th style="width:26%">What gets set up</th><th>Details</th></tr>
+    <tr><td>Program and data</td><td><code>/opt/price-verifier</code>, run by the service user <code>priceverifier</code>.</td></tr>
+    <tr><td>Automatic start</td><td>systemd service <code>price-verifier</code>: <code>systemctl status price-verifier</code></td></tr>
+    <tr><td>Local network only</td><td>ufw or firewalld rules for the local subnet when a firewall is active; the web server itself refuses non-private addresses.</td></tr>
+    <tr><td>Logs</td><td><code>journalctl -u price-verifier</code> and <code>/opt/price-verifier/logs</code></td></tr>
+    <tr><td>Uninstall</td><td><code>sudo /opt/price-verifier/uninstall.sh</code></td></tr>
+  </table>
+  <p>Unattended install: <code>sudo PORT=8000 IMPORT_FROM= QUIET=1 bash install.sh</code></p>
+
+  <h2 style="margin-top:14pt">17. Connecting the scanners</h2>
+  <ol class="steps">
+    <li>Connect each scanner to the store Wi-Fi (the same network as the server).</li>
+    <li>Open Admin (section 10) &gt; <strong>Sync</strong>, enter the server address printed by the installer, and choose <strong>Save URL</strong>.</li>
+    <li>Choose <strong>Items</strong>, then <strong>Images</strong> and <strong>Videos</strong> for the first sync.</li>
+    <li>Tick <strong>Daily auto-sync</strong> and pick a quiet time.</li>
+    <li>Scan a product to confirm. The home screen's bottom-left corner shows the sync time.</li>
+  </ol>
+</section>
+
+<section>
+  <h2 style="margin-top:14pt">18. Maintenance, backup and updates</h2>
+  <ul>
+    <li><strong>Backup:</strong> copy the portal data folder (<code>C:\PriceVerifier\portal</code> or <code>/opt/price-verifier/portal</code>). It holds the catalog, media, promos (<code>promos.csv</code>), design (<code>design.json</code>) and the portal password.</li>
+    <li><strong>Restore / move to a new PC:</strong> install on the new PC and give the old portal folder as the import folder.</li>
+    <li><strong>Forgotten portal password:</strong> delete <code>upload-config.php</code> in the portal folder, then open the portal to create a new password. Nothing else is lost.</li>
+    <li><strong>Logs (Windows):</strong> <code>supervisor.log</code> (starts and restarts), <code>caddy-console.log</code> (web server), <code>access.log</code> (requests), <code>php-errors.log</code> (portal errors).</li>
+    <li><strong>Restart the server:</strong> restart the PC, or run the <strong>Price Verifier Server</strong> task in Task Scheduler (Linux: <code>sudo systemctl restart price-verifier</code>).</li>
+  </ul>
+
+  <h2 style="margin-top:14pt">19. Troubleshooting</h2>
+  <table>
+    <tr><th style="width:30%">Problem</th><th>What to check</th></tr>
+    <tr><td>Scanner says "Sync failed" or the sync time is old</td><td>The URL in Admin &gt; Sync includes <code>http://</code> and the port. The scanner is on the store network. The server PC is on, and <code>http://localhost:8000</code> opens on it.</td></tr>
+    <tr><td>Portal doesn't open from other PCs</td><td>Use the server's LAN address, not <code>localhost</code>. The PC must be on the same local subnet (the firewall rule only allows the local subnet).</td></tr>
+    <tr><td>"This server is only available on the local network."</td><td>The request came from outside the private network (for example through a router port forward). This is intentional.</td></tr>
+    <tr><td>Server didn't start after a reboot</td><td>Task Scheduler &gt; <strong>Price Verifier Server</strong> exists and is enabled; check <code>logs\supervisor.log</code>. Another program may have taken the port: re-run the installer to pick a new port, then update the scanners.</td></tr>
+    <tr><td>A product shows "No product record"</td><td>Check the product in the portal's Catalog tab. After adding it, sync <strong>Items</strong> on the scanner.</td></tr>
+    <tr><td>A promo doesn't appear</td><td>In the Promos tab: status <em>Active</em> today, not "Not in catalog", and the promo price is below the regular price. Then sync <strong>Items</strong>. Check the scanner's date is correct.</td></tr>
+    <tr><td>A colour change on a scanner keeps reverting</td><td>That setting is ticked in the portal's Design tab (the scanner shows an orange note). Change it in the portal, or untick it there.</td></tr>
+    <tr><td>Scheduled media doesn't play</td><td>The file must be renamed to the scheduled format (Appendix C) and its date must not have passed.</td></tr>
+    <tr><td>Update prompt doesn't appear</td><td>The APK is uploaded in Display media, its version is higher than the installed app, and the scanner's server URL is correct.</td></tr>
+    <tr><td>Catalog upload skipped rows</td><td>Rows need a barcode, name and valid price. In Excel, format the barcode column as Text so long barcodes aren't turned into numbers like <code>4.80653E+11</code>.</td></tr>
+  </table>
+</section>
+
+<!-- ============================== APPENDICES ============================== -->
+<section class="part">
+  <div class="part-label">Appendices</div>
+  <h2>A. Catalog file format</h2>
+  <p>A CSV (or comma-separated TXT) file with a header row. Columns are matched by <strong>header name</strong>, so they can be in any order, and extra columns are ignored.</p>
+  <pre>barcode,name,uom,category,price,item_code
+480653306059,Baking Soda,case,BAKING NEEDS,40.50,
+4800016644290,"Bear Brand Milk 300g",pc,DAIRY,89.50,BB300</pre>
+  <table>
+    <tr><th style="width:18%">Column</th><th style="width:14%">Required</th><th>Also accepted as</th></tr>
+    <tr><td><code>barcode</code></td><td>Yes</td><td>bar code, upc, ean, code. EAN-13, UPC-A, UPC-E and EAN-8 are supported.</td></tr>
+    <tr><td><code>name</code></td><td>Yes</td><td>product, description, item, item name</td></tr>
+    <tr><td><code>price</code></td><td>Yes</td><td>amount, retail, srp, selling price. A plain number such as <code>89.50</code>.</td></tr>
+    <tr><td><code>uom</code></td><td>No</td><td>unit, unit of measure</td></tr>
+    <tr><td><code>category</code></td><td>No</td><td>department</td></tr>
+    <tr><td><code>item_code</code></td><td>No</td><td>item code, itemcode, sku, item sku</td></tr>
+  </table>
+  <ul>
+    <li>Header names ignore upper/lower case, and <code>-</code> or <code>_</code> count as spaces.</li>
+    <li>Rows without a barcode, name, or a valid non-negative price are skipped.</li>
+    <li>Values containing commas must be in double quotes.</li>
+  </ul>
+
+  <h2 style="margin-top:14pt">B. Promos file format</h2>
+  <p>Used by the Promos tab's <strong>Upload CSV</strong> (replaces all promos). Columns in any order:</p>
+  <pre>barcode,label,type,value,buy,take,start,end
+480653306059,promo,percent,50,,,2026-10-01,2026-10-31
+0000049680218,special,fixed,199.00,,,2026-09-20,2026-12-31
+0000000069083,promo,buy_take,,1,1,2026-10-15,2026-10-31</pre>
+  <table>
+    <tr><th style="width:14%">Column</th><th>Values</th></tr>
+    <tr><td><code>barcode</code></td><td>The product barcode (required).</td></tr>
+    <tr><td><code>label</code></td><td><code>promo</code> or <code>special</code>.</td></tr>
+    <tr><td><code>type</code></td><td><code>percent</code>, <code>amount</code>, <code>fixed</code> or <code>buy_take</code> (required).</td></tr>
+    <tr><td><code>value</code></td><td>Percent off (1&ndash;100), amount off in pesos, or the fixed promo price. Leave blank for buy_take.</td></tr>
+    <tr><td><code>buy</code>, <code>take</code></td><td>Quantities for buy_take, for example 1 and 1.</td></tr>
+    <tr><td><code>start</code>, <code>end</code></td><td>Dates as <code>YYYY-MM-DD</code>; Excel's <code>M/D/YYYY</code> is also accepted. Both days are included.</td></tr>
+  </table>
+
+  <h2 style="margin-top:14pt">C. Scheduled media file names</h2>
+  <table>
+    <tr><th style="width:36%">File name</th><th>Meaning</th></tr>
+    <tr><td><code>MMDDYY.jpg</code> / <code>.png</code> / <code>.mp4</code></td><td>Plays until the end of that date. Images use the default image time; videos play once in full.</td></tr>
+    <tr><td><code>MMDDYY_SECONDS.ext</code></td><td>Plays until that date, for the given seconds each turn.</td></tr>
+    <tr><td><code>CODE_MMDDYY_SECONDS.ext</code></td><td>The same, with an optional 3-character code in front to tell files apart.</td></tr>
+  </table>
+  <p>Example: <code>000_010126_20.mp4</code> stays active through January 1, 2026 and displays for 20 seconds each time its turn comes up. Don't name scheduled files <code>default.*</code>: the default banner and video are uploaded in their own cards.</p>
+
+  <h2 style="margin-top:14pt">D. Files on the server</h2>
+  <table>
+    <tr><th style="width:30%">File in the portal folder</th><th>Contents</th></tr>
+    <tr><td><code>catalog.csv</code> / <code>catalog.txt</code></td><td>Product catalog.</td></tr>
+    <tr><td><code>promos.csv</code></td><td>Promos and special prices.</td></tr>
+    <tr><td><code>design.json</code></td><td>Settings ticked in the Design tab.</td></tr>
+    <tr><td><code>logo.*</code>, <code>banner.*</code>, <code>video.mp4</code></td><td>Default display media.</td></tr>
+    <tr><td><code>marquee.txt</code></td><td>Scrolling message.</td></tr>
+    <tr><td><code>media-order.txt</code>, <code>scheduled-media.txt</code></td><td>Playback order and the scheduled media list.</td></tr>
+    <tr><td><code>price-verifier.apk</code>, <code>app-update-info.json</code></td><td>App update file and its details.</td></tr>
+    <tr><td><code>upload-config.php</code></td><td>The portal password (stored as a secure hash). Never served to browsers.</td></tr>
+  </table>
+
+  <h2 style="margin-top:14pt">E. Support</h2>
+  <div class="note"><strong>Newton Scanning Systems Inc.</strong>Website: newtonscanning.com<br>Email: program@newton.com.ph &middot; inquiry@newton.com.ph<br>When asking for help, include the scanner's serial number (shown in Admin when a device isn't authorized), the server address, and a photo of any message on screen.</div>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+[Unit]
+Description=Price Verifier data source check (reads the catalog from the store's POS database when a sync is due)
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=priceverifier
+Group=priceverifier
+WorkingDirectory={{DIR}}/portal
+Environment=PHP_INI_SCAN_DIR={{DIR}}/config
+ExecStart={{DIR}}/bin/frankenphp php-cli {{DIR}}/portal/index.php --catalog-source-sync
+TimeoutStartSec=20min
+NoNewPrivileges=true
+ProtectSystem=full
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths={{DIR}}/portal {{DIR}}/logs

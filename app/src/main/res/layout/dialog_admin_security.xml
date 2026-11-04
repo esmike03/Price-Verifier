@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="22dp"
+    android:paddingVertical="8dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/change_pin"
+        android:textColor="@color/muted"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/pinDisabledNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/pin_change_disabled"
+        android:textColor="@color/muted"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/newPinInput"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="10dp"
+        android:alpha="0.4"
+        android:background="@drawable/input_field"
+        android:enabled="false"
+        android:fontFamily="sans-serif"
+        android:hint="@string/new_pin"
+        android:importantForAutofill="no"
+        android:inputType="numberPassword"
+        android:letterSpacing="0.2"
+        android:singleLine="true"
+        android:textColor="@color/ink"
+        android:textColorHint="@color/muted"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/savePinButton"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginTop="12dp"
+        android:alpha="0.4"
+        android:background="@drawable/button_primary"
+        android:enabled="false"
+        android:fontFamily="sans-serif-medium"
+        android:letterSpacing="0.04"
+        android:text="@string/save_pin"
+        android:textAllCaps="false"
+        android:textColor="@color/surface"
+        android:textSize="16sp" />
+</LinearLayout>

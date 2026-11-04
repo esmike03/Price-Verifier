@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/colorPickerHex"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/input_field"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:textColor="@color/ink"
+        android:textSize="18sp" />
+
+    <View
+        android:id="@+id/colorPickerPreview"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/brand" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/color_red"
+        android:textColor="@color/ink"
+        android:textSize="13sp" />
+
+    <SeekBar
+        android:id="@+id/colorPickerRed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="255" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/color_green"
+        android:textColor="@color/ink"
+        android:textSize="13sp" />
+
+    <SeekBar
+        android:id="@+id/colorPickerGreen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="255" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/color_blue"
+        android:textColor="@color/ink"
+        android:textSize="13sp" />
+
+    <SeekBar
+        android:id="@+id/colorPickerBlue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="255" />
+</LinearLayout>

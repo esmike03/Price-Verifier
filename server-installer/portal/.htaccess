@@ -1,0 +1,5 @@
+Options -Indexes
+
+<FilesMatch "(^\.|upload-config\.php$|catalog-source(-state)?\.php$|scheduled-media\.txt$|device-serials\.txt$|app-update-info\.json$|\.bak|\.tmp|original-4k|android-720p)">
+    Require all denied
+</FilesMatch>

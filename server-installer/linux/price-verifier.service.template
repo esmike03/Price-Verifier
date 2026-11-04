@@ -1,0 +1,26 @@
+[Unit]
+Description=Price Verifier server (scanners on the local network)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=priceverifier
+Group=priceverifier
+WorkingDirectory={{DIR}}/portal
+Environment=PHP_INI_SCAN_DIR={{DIR}}/config
+Environment=XDG_DATA_HOME={{DIR}}/data
+Environment=XDG_CONFIG_HOME={{DIR}}/data
+ExecStart={{DIR}}/bin/frankenphp run --config {{DIR}}/config/Caddyfile --adapter caddyfile
+Restart=always
+RestartSec=3
+LimitNOFILE=65536
+{{CAPS}}
+NoNewPrivileges=true
+ProtectSystem=full
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths={{DIR}}/portal {{DIR}}/logs {{DIR}}/sessions {{DIR}}/data
+
+[Install]
+WantedBy=multi-user.target

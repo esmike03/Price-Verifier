@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://tools.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/surface"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:id="@+id/adminRoot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        android:padding="@dimen/screen_padding">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="14dp">
+
+            <Button
+                android:id="@+id/adminBackButton"
+                android:layout_width="wrap_content"
+                android:layout_height="44dp"
+                android:layout_marginEnd="14dp"
+                android:background="@drawable/button_secondary"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:paddingHorizontal="18dp"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
+                android:stateListAnimator="@null"
+                android:text="@string/back"
+                android:textAllCaps="false"
+                android:textColor="@color/ink"
+                android:textSize="15sp" />
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="26dp"
+                android:layout_marginEnd="12dp"
+                android:background="@color/accent" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-medium"
+                android:letterSpacing="0.01"
+                android:text="@string/admin_title"
+                android:textColor="@color/ink"
+                android:textSize="@dimen/admin_title_size" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider" />
+
+        <LinearLayout
+            android:id="@+id/pinPanel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/section_gap"
+            android:background="@drawable/display_panel"
+            android:orientation="vertical"
+            android:padding="@dimen/admin_panel_padding">
+
+            <EditText
+                android:id="@+id/pinInput"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@drawable/input_field"
+                android:fontFamily="sans-serif"
+                android:hint="@string/pin"
+                android:imeOptions="actionDone"
+                android:importantForAutofill="no"
+                android:inputType="numberPassword"
+                android:letterSpacing="0.2"
+                android:singleLine="true"
+                android:textColor="@color/ink"
+                android:textColorHint="@color/muted"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/unlockButton"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/button_primary"
+                android:fontFamily="sans-serif-medium"
+                android:letterSpacing="0.04"
+                android:text="@string/unlock"
+                android:textAllCaps="false"
+                android:textColor="@color/surface"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lockedPanel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/section_gap"
+            android:background="@drawable/display_panel"
+            android:orientation="vertical"
+            android:padding="@dimen/admin_panel_padding"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/device_not_authorized_title"
+                android:textColor="@color/ink"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/lockedMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="sans-serif"
+                android:textColor="@color/muted"
+                android:textIsSelectable="true"
+                android:textSize="15sp"
+                tools:text="This device is not authorized for admin access.\n\nDevice serial: 1234567890" />
+        </LinearLayout>
+
+        <GridLayout
+            android:id="@+id/adminPanel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/section_gap"
+            android:columnCount="@integer/admin_module_columns"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnSpan="@integer/admin_module_columns"
+                android:layout_gravity="fill_horizontal"
+                android:layout_marginBottom="6dp"
+                android:fontFamily="sans-serif-medium"
+                android:letterSpacing="0.04"
+                android:text="@string/admin_modules_title"
+                android:textAllCaps="true"
+                android:textColor="@color/muted"
+                android:textSize="13sp" />
+
+            <!-- Product Catalog module -->
+            <LinearLayout
+                android:id="@+id/moduleCatalog"
+                style="@style/AdminModuleCard">
+
+                <View style="@style/AdminModuleAccent" />
+
+                <LinearLayout style="@style/AdminModuleText">
+
+                    <TextView
+                        style="@style/AdminModuleTitle"
+                        android:text="@string/module_catalog_title" />
+
+                    <TextView
+                        android:id="@+id/catalogSummary"
+                        style="@style/AdminModuleSubtitle"
+                        tools:text="Products in local database: 1,254" />
+                </LinearLayout>
+
+                <TextView style="@style/AdminModuleChevron" />
+            </LinearLayout>
+
+            <!-- Add or Update Item module -->
+            <LinearLayout
+                android:id="@+id/moduleManual"
+                style="@style/AdminModuleCard">
+
+                <View style="@style/AdminModuleAccent" />
+
+                <LinearLayout style="@style/AdminModuleText">
+
+                    <TextView
+                        style="@style/AdminModuleTitle"
+                        android:text="@string/module_manual_title" />
+
+                    <TextView
+                        style="@style/AdminModuleSubtitle"
+                        android:text="@string/module_manual_sub" />
+                </LinearLayout>
+
+                <TextView style="@style/AdminModuleChevron" />
+            </LinearLayout>
+
+            <!-- Default Display module -->
+            <LinearLayout
+                android:id="@+id/moduleMedia"
+                style="@style/AdminModuleCard">
+
+                <View style="@style/AdminModuleAccent" />
+
+                <LinearLayout style="@style/AdminModuleText">
+
+                    <TextView
+                        style="@style/AdminModuleTitle"
+                        android:text="@string/module_media_title" />
+
+                    <TextView
+                        style="@style/AdminModuleSubtitle"
+                        android:text="@string/module_media_sub" />
+                </LinearLayout>
+
+                <TextView style="@style/AdminModuleChevron" />
+            </LinearLayout>
+
+            <!-- Scheduled Media module -->
+            <LinearLayout
+                android:id="@+id/moduleSchedule"
+                style="@style/AdminModuleCard">
+
+                <View style="@style/AdminModuleAccent" />
+
+                <LinearLayout style="@style/AdminModuleText">
+
+                    <TextView
+                        style="@style/AdminModuleTitle"
+                        android:text="@string/module_schedule_title" />
+
+                    <TextView
+                        style="@style/AdminModuleSubtitle"
+                        android:text="@string/module_schedule_sub" />
+                </LinearLayout>
+
+                <TextView style="@style/AdminModuleChevron" />
+            </LinearLayout>
+
+            <!-- Price Check Display module -->
+            <LinearLayout
+                android:id="@+id/modulePriceCheck"
+                style="@style/AdminModuleCard">
+
+                <View style="@style/AdminModuleAccent" />
+
+                <LinearLayout style="@style/AdminModuleText">
+
+                    <TextView
+                        style="@style/AdminModuleTitle"
+                        android:text="@string/module_pricecheck_title" />
+
+                    <TextView
+                        style="@style/AdminModuleSubtitle"
+                        android:text="@string/module_pricecheck_sub" />
+                </LinearLayout>
+
+                <TextView style="@style/AdminModuleChevron" />
+            </LinearLayout>
+
+            <!-- LAN Sync module -->
+            <LinearLayout
+                android:id="@+id/moduleLan"
+                style="@style/AdminModuleCard">
+
+                <View style="@style/AdminModuleAccent" />
+
+                <LinearLayout style="@style/AdminModuleText">
+
+                    <TextView
+                        style="@style/AdminModuleTitle"
+                        android:text="@string/module_lan_title" />
+
+                    <TextView
+                        style="@style/AdminModuleSubtitle"
+                        android:text="@string/module_lan_sub" />
+                </LinearLayout>
+
+                <TextView style="@style/AdminModuleChevron" />
+            </LinearLayout>
+
+            <!-- Security module -->
+            <LinearLayout
+                android:id="@+id/moduleSecurity"
+                style="@style/AdminModuleCard">
+
+                <View style="@style/AdminModuleAccent" />
+
+                <LinearLayout style="@style/AdminModuleText">
+
+                    <TextView
+                        style="@style/AdminModuleTitle"
+                        android:text="@string/module_security_title" />
+
+                    <TextView
+                        style="@style/AdminModuleSubtitle"
+                        android:text="@string/module_security_sub" />
+                </LinearLayout>
+
+                <TextView style="@style/AdminModuleChevron" />
+            </LinearLayout>
+        </GridLayout>
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="screen_padding">22dp</dimen>
+    <dimen name="video_logo_height">56dp</dimen>
+    <dimen name="video_logo_max_width">260dp</dimen>
+    <dimen name="idle_logo_size">88dp</dimen>
+    <dimen name="section_gap">18dp</dimen>
+    <dimen name="panel_padding">28dp</dimen>
+    <dimen name="brand_title_size">20sp</dimen>
+    <dimen name="status_text_size">13sp</dimen>
+    <dimen name="product_name_size">38sp</dimen>
+    <dimen name="price_size">88sp</dimen>
+    <dimen name="meta_size">17sp</dimen>
+    <dimen name="regular_price_size">30sp</dimen>
+    <dimen name="promo_title_size">26sp</dimen>
+    <dimen name="promo_detail_size">16sp</dimen>
+    <dimen name="scan_prompt_text_size">20sp</dimen>
+    <dimen name="scan_prompt_bottom_margin">84dp</dimen>
+    <dimen name="admin_title_size">28sp</dimen>
+    <dimen name="admin_panel_padding">22dp</dimen>
+</resources>

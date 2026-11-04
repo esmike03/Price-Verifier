@@ -1,0 +1,31 @@
+plugins {
+    id "com.android.application"
+}
+
+android {
+    namespace "com.priceverifier"
+    compileSdk 36
+
+    defaultConfig {
+        applicationId "com.priceverifier"
+        minSdk 23
+        targetSdk 36
+        versionCode 6
+        versionName "v6"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+        }
+    }
+}
+
+dependencies {
+    // Datalogic OEM SDK: lets the app read the device hardware serial number via
+    // com.datalogic.device.info.SYSTEM.SERIAL_NUMBER, which works on Datalogic
+    // Android 10+ devices where the stock Build.getSerial() is blocked.
+    implementation "com.datalogic:datalogic-android-sdk:1.49"
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="app_bg">#FFFFFF</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="ink">#0F172A</color>
+    <color name="ink_soft">#334155</color>
+    <color name="muted">#64748B</color>
+    <color name="divider">#E5E7EB</color>
+    <color name="card_border">#EEF0F3</color>
+
+    <color name="brand">#16A34A</color>
+    <color name="brand_dark">#15803D</color>
+    <color name="brand_tint">#ECFDF5</color>
+
+    <color name="accent">#F97316</color>
+    <color name="accent_dark">#C2410C</color>
+    <color name="accent_tint">#FFF7ED</color>
+
+    <color name="warning">#C2410C</color>
+
+    <color name="marquee_bg">#000000</color>
+    <color name="marquee_text">#FFFFFF</color>
+
+    <color name="check_bg">#FDE047</color>
+    <color name="state_alert">#DC2626</color>
+
+    <color name="palette_yellow">#FACC15</color>
+    <color name="palette_red">#DC2626</color>
+    <color name="palette_blue">#2563EB</color>
+</resources>

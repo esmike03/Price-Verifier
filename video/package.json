@@ -1,0 +1,23 @@
+{
+  "name": "price-verifier-showcase",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Remotion showcase video for the Price Verifier app and web portal",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "audio": "node scripts/make-audio.mjs",
+    "render": "remotion render src/index.ts Showcase out/price-verifier-showcase.mp4",
+    "still": "remotion still src/index.ts Showcase"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.534",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "remotion": "^4.0.534"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "typescript": "^7.0.2"
+  }
+}

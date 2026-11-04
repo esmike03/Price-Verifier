@@ -1,0 +1,21 @@
+{
+  "listen_host": "0.0.0.0",
+  "listen_port": 8090,
+  "access_token": "REPLACE_WITH_8_DIGITS",
+  "mysql": {
+    "host": "127.0.0.1",
+    "port": 3399,
+    "user": "installer_test",
+    "password": "not-a-real-password",
+    "database": "rdmssql",
+    "table": "RD5500",
+    "columns": {
+      "barcode": "IN_CODE",
+      "name": "ITE_DESC",
+      "price": "UNT_PRIC",
+      "uom": "UNT_CODE",
+      "category": "DEP_CODE",
+      "item_code": ""
+    }
+  }
+}

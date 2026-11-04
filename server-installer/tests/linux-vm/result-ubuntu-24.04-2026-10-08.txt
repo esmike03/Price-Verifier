@@ -1,0 +1,36 @@
+portal page                        200
+missing file                       404
+protected state file               404 body=9
+protected config file              403 body=9
+create password                    302
+sign out                           302
+wrong password                     302 
+sign in                            302
+upload catalog.csv                 302 | 
+scanner gets catalog.csv           200 rows=6 sha=366ebd4fde9f
+upload catalog.xlsx                302 | 
+catalog after .xlsx                rows=6 sha=5926bcc4d8b5 zeros=1
+upload catalog.xls                 302 | 
+catalog after .xls                 rows=3 sha=8eb1011329b0
+add and update only                302 | 
+catalog after merge                rows=5 sha=e6d9e14d8669
+save scrolling message             302 text=Welcome to the store
+empty scrolling message            302 file=200 bytes=0
+upload banner                      302 | 
+scanner gets banner.png            200 type=image/png
+media manifest                     200 first=# price-verifier-media-manifest
+app update info                    404 {"available":false}
+old app check-in                   {"request":null}
+new app check-in                   {"request":null}
+request items                      302 old-app:{"request":{"id":N,"scope":"items","age":N}} new-app:{"request":{"id":N,"scope":"items","age":N}}
+request images                     302 old-app:{"request":null} new-app:{"request":{"id":N,"scope":"images","age":N}}
+request videos                     302 old-app:{"request":null} new-app:{"request":{"id":N,"scope":"videos","age":N}}
+request app                        302 old-app:{"request":null} new-app:{"request":{"id":N,"scope":"app","age":N}}
+request all                        302 old-app:{"request":{"id":N,"scope":"all","age":N}} new-app:{"request":{"id":N,"scope":"all","age":N}}
+scanner list                       NEWAPP001 IP v8 Online seen just now Done just now &middot; POS: 1200 products OLDAPP001 IP v8 Online seen just now Waiting starts in a few seconds 
+8 s after last check-in            new app: Offline, old app: Online
+status needs sign-in               401
+pos-sync without token             401
+pos-sync wrong token               401
+pos-sync with token                200
+pos-sync catalog                   200

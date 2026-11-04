@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Base shape for the price-check promo banner; MainActivity recolours it
+     (red for PROMO, blue for SPECIAL PRICE). -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/palette_red" />
+    <corners android:radius="14dp" />
+</shape>
