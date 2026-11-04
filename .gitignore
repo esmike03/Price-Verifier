@@ -1,0 +1,41 @@
+*.iml
+.gradle/
+.idea/
+build/
+local.properties
+captures/
+.externalNativeBuild/
+.cxx/
+app/build/
+
+# Local tool settings, screenshots, and backups
+.claude/
+.shots/
+backups/
+
+# Generated packages and bundled runtimes
+*.zip
+*.tar.gz
+*.apk
+*.aab
+app/release/
+server-installer/dist/
+server-installer/vendor/
+
+# Dependencies and generated video output
+node_modules/
+video/out/
+video/.remotion/
+
+# Local credentials and portal runtime data
+.env
+.env.*
+!.env.example
+*.jks
+*.keystore
+server-installer/portal/upload-config.php
+server-installer/portal/catalog-source.php
+server-installer/portal/catalog-source-state.php
+server-installer/portal/device-sync.php
+server-installer/portal/.catalog-source.lock
+server-installer/portal/catalog.csv
