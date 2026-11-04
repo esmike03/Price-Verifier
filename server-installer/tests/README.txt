@@ -8,6 +8,12 @@ Scanner status checks (no running server or real device required):
   Check offline expiry, reconnection, legacy intervals, request status and
   browser polling without changing actual portal data.
 
+GitHub Actions runs these two scanner checks, plus PHP and JavaScript syntax
+checks, when a pull request or a push to main changes the relevant portal or
+test files. The workflow is .github/workflows/scanner-status.yml and can also
+be started manually from Actions. It uses Ubuntu 24.04 with Node.js 24 and the
+runner's PHP; no installed server, scanner, database or credentials are needed.
+
 These scripts run the real install.ps1 from an extracted package WITHOUT
 administrator rights and without touching C:\PriceVerifier, so a change to the
 installer can be checked before it goes to a client.
